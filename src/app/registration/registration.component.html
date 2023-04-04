@@ -1,0 +1,45 @@
+
+<div class="container mt-3">
+    <h2 class="textual">Registration</h2>
+    <form #Registrationform='ngForm' (ngSubmit)="registeruser()">
+      {{Registrationform.form.valid}}
+
+      <small [class.text-danger]="msg.status == 500">{{msg.message}}</small>
+     <!-- <small class="text-danger" > {{msg}}</small>-->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control"  placeholder="Enter email" name="email" [(ngModel)]="user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+        #email="ngModel"
+        [class.is-invalid]="email.invalid && email.touched">
+       
+       <div *ngIf="email.errors  && (email.invalid && email.touched)">
+        <small class="text-danger" *ngIf="email.errors['required']">E-mail est un champ obligatoire</small>
+        <small class="text-danger" *ngIf="email.errors['pattern']">Entrer un email valide</small>
+      </div>
+      </div>
+
+      <div class="form-group">
+        <label for="username">User Name:</label>
+        <input type="text" class="form-control"  placeholder="Entrer username" name="username" [(ngModel)]="user.username"   #username="ngModel" required
+        [class.is-invalid]="username.invalid && username.touched">
+        <small class="text-danger" [class.d-none]="username.valid || username.untouched"> username est un champ obligatoire </small>
+      </div>
+
+      <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control"  placeholder="Entrer password" name="password" [(ngModel)]="user.password" required  #password="ngModel"
+        [class.is-invalid]="password.invalid && password.touched">
+        <small class="text-danger" [class.d-none]="password.valid || password.untouched"> password est un champ obligatoire </small>
+      </div>
+
+      <div class="form-group">
+        <label for="pwd">Confimer Password:</label>
+        <input type="password" class="form-control"  placeholder="Entrer confimer password" name="cpassword" [(ngModel)]="user.cpassword" required  #cpassword="ngModel"
+        [class.is-invalid]="cpassword.invalid && cpassword.touched">
+        <small class="text-danger" [class.d-none]="(cpassword.value == password.value )|| cpassword.untouched"> password et confirm password doit le meme </small>
+      </div>
+    
+      <button [disabled]="Registrationform.form.invalid" type="submit" class="btn btn-info">Register</button>
+    </form>
+    <small class="float-right btextual" [routerLink]="['/login']" >existe compte ? Login</small>
+  </div>
